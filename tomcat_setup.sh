@@ -12,11 +12,6 @@
 #     Checking the required variables      #
 ############################################
 
-#if [ "$JAVA_HOME" = "" ]; then
-#	echo "you must install a jdk and define JAVA_HOME envoirement variable"
-#	exit 0
-#fi
-
 # simply parser
 
 if [ $# != 4 ]; then
@@ -110,6 +105,10 @@ case user_jdk in
 "4")
 	echo "Write the path to JDK"
 	read javahome
+	if [ "$JAVA_HOME" = "" ]; then
+		echo "you must install a jdk and define JAVA_HOME envoirement variable"
+		exit 0
+	fi
 	export JAVA_HOME=$javahome
 	;;
 *)	
