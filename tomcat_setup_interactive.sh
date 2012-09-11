@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ############################################
-#			Interactive Setup			   #
+#           Interactive Setup              #
 ############################################
 
 echo "Choose JDK version"
@@ -31,5 +31,6 @@ read user_domain
 # user_tomcat=$1
 # user_domain=$2
 # user_version=$3
+# user_jdk=$4
 
-./tomcat_setup.sh $user_name $user_domain $choice $jdk > setup.log
+./tomcat_setup.sh $user_name $user_domain $choice $jdk
