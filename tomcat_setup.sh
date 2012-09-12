@@ -7,6 +7,7 @@
 # $user_tomcat
 # $user_port
 # $user_jdk
+# $user_mem
 
 ############################################
 #     Checking the required variables      #
@@ -14,8 +15,8 @@
 
 # simply parser
 
-if [ $# != 4 ]; then
-	echo "you must give 4 arguments: user, user_domain, tomcat version and jdk version"
+if [ $# != 5 ]; then
+	echo "you must give 5 arguments: user, user_domain, tomcat version and jdk version"
 	exit 0
 fi
 
@@ -23,6 +24,7 @@ user_tomcat=$1
 user_domain=$2
 user_version=$3
 user_jdk=$4
+user_mem=$5
 
 ############################################
 #Choice of the apache-tomcat server version#
@@ -167,13 +169,6 @@ fi
 
 # adding the new worker
 
-# echo "# ------- TOMCAT WORKER FOR USER $user_tomcat ----------
-# worker.$user_tomcat.port = $user_port
-# worker.$user_tomcat.host = localhost
-# worker.$user_tomcat.type = ajp13" >> /usr/local/jakarta/tomcat/conf/workers.properties
-
-# Maybe it's better using sed:
-
 sed -i 's/# ----- USERS -----/# ----- USERS ----- \n# ------- TOMCAT WORKER FOR USER '$user_tomcat' ---------- \nworker.'$user_tomcat'.port = '$user_port' \nworker.'$user_tomcat'.host = localhost \nworker.'$user_tomcat'.type = ajp13 \n/' /usr/local/jakarta/tomcat/conf/workers.properties
 
 ############################################
@@ -229,8 +224,10 @@ sed -i '2iexport JAVA_HOME='${JAVA_HOME//'/'/'\/'}'' $HOME/tomcat-server/bin/sta
 # We must to limit the java memory!
 # http://stackoverflow.com/questions/2724820/tomcat-how-to-limit-the-maximum-memory-tomcat-will-use
 
+sed -i '2iJAVA_OPTS="-Xmx'$user_mem'm"' $HOME/tomcat-server/bin/startup.sh
+
 ############################################
 #   Saving all changes on the users file   #
 ############################################
 
-echo "$tomcat_user $user_domain $user_port $user_version" >> /usr/local/jakarta/conf/tomcatusers.cfg
+echo "$tomcat_user $user_domain $user_port $user_version $user_mem" >> /usr/local/jakarta/conf/tomcatusers.cfg

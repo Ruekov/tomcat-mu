@@ -28,9 +28,14 @@ echo "User Domain"
 
 read user_domain
 
+echo "User Memory"
+
+read mem
+
 # user_tomcat=$1
 # user_domain=$2
 # user_version=$3
 # user_jdk=$4
+# user_mem=$5
 
-./tomcat_setup.sh $user_name $user_domain $choice $jdk
+./tomcat_setup.sh $user_name $user_domain $choice $jdk $mem
