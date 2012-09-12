@@ -1,4 +1,5 @@
 #!/bin/sh
+# CPANEL TEST
 
 remove_tomcat() {
 	echo "Removing $1"

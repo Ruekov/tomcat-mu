@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# CPANEL TEST
+
 # Config file on /usr/local/jakarta/conf/tomcatusers.cfg
 
 # VARS
