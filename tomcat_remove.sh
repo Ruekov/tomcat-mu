@@ -19,7 +19,7 @@ remove_tomcat() {
 	sed -i 's/'$user_tomcat',//' /usr/local/jakarta/tomcat/conf/workers.propierties
 		# maybe it's the last one
 	sed -i 's/,'$user_tomcat'//' /usr/local/jakarta/tomcat/conf/workers.propierties
-	}
+}
 
 echo "Chose action:"
 echo "1.- Remove an User"
@@ -29,12 +29,14 @@ read selection
 case selection in
 "1") echo "write user name:"
 	read user_tomcat
-	 echo "write user name:"
+	 echo "write user domain:"
 	read user_domain
 	remove_tomcat $user_tomcat $user_domain
 	;;
 "2") echo "write user name:"
 	read user_tomcat
+	echo "write user domain:"
+	read user_domain
 	remove_tomcat $user_tomcat $user_domain
 	./tomcat_setup_interactive.sh
 	;;
