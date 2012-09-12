@@ -125,8 +125,8 @@ esac
 
 # make directories and untar the apache tomcat server 
 
-mkdir $HOME/tomcat-server/
-cd $HOME/tomcat-server/
+mkdir /home/$user_tomcat/tomcat-server/
+cd /home/$user_tomcat/tomcat-server/
 mv ../apache-tomcat-$versionbar.tar.gz ./
 tar xvzf apache-tomcat-.tar.gz --strip-components=1
 rm apache-tomcat-$versionbar.tar.gz
@@ -177,19 +177,19 @@ sed -i 's/# ----- USERS -----/# ----- USERS ----- \n# ------- TOMCAT WORKER FOR 
 
 # backup copy of the original server.xml file
 
-cp $HOME/tomcat-server/conf/server.xml $HOME/tomcat-server/conf/server.xml.old
+cp /home/$user_tomcat/tomcat-server/conf/server.xml /home/$user_tomcat/tomcat-server/conf/server.xml.old
 
 # removing HTTP service
 
-sed -i '/protocol="HTTP\/1.1"/d' $HOME/tomcat-server/conf/server.xml.old
+sed -i '/protocol="HTTP\/1.1"/d' /home/$user_tomcat/tomcat-server/conf/server.xml.old
 
 # adapting AJP service
 
-sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Connector port="'$numport'" protocol="AJP\/1.3"\/>/g' $HOME/tomcat-server/conf/server.xml.old
+sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Connector port="'$numport'" protocol="AJP\/1.3"\/>/g' /home/$user_tomcat/tomcat-server/conf/server.xml.old
 
 # adding new host service
 
-sed -i 's/<\/Engine>/     <Host name="'$user_domain'" appBase="\/home\/'$user_tomcat'\/public_html">\n \t  \t <Alias>'$user_domain'<\/Alias>\n  \t  \t <Context path="" reloadable="true" docBase="\/home\/'$user_tomcat'\/public_html" debug="1" unpackWARs="true" autoDeploy="true"\/>\n  \t <\/Host>\n    <\/Engine>/g' $HOME/tomcat-server/conf/server.xml.old
+sed -i 's/<\/Engine>/     <Host name="'$user_domain'" appBase="\/home\/'$user_tomcat'\/public_html">\n \t  \t <Alias>'$user_domain'<\/Alias>\n  \t  \t <Context path="" reloadable="true" docBase="\/home\/'$user_tomcat'\/public_html" debug="1" unpackWARs="true" autoDeploy="true"\/>\n  \t <\/Host>\n    <\/Engine>/g' /home/$user_tomcat/tomcat-server/conf/server.xml.old
 
 ############################################
 # editing EasyApache's jkmod config files  #
@@ -215,16 +215,16 @@ sed -i 's/ajp13/'$user_tomcat'/g' /usr/local/apache/conf/userdata/std/1/$user_to
 
 # Security copy
 
-cp $HOME/tomcat-server/tomcat/bin/startup.sh $HOME/tomcat-server/bin/startup.sh.old
+cp /home/$user_tomcat/tomcat-server/tomcat/bin/startup.sh /home/$user_tomcat/tomcat-server/bin/startup.sh.old
 
 # Must force the config to have the correct JDK writing on startup.sh second line an export of new JAVA_HOME
 
-sed -i '2iexport JAVA_HOME='${JAVA_HOME//'/'/'\/'}'' $HOME/tomcat-server/bin/startup.sh
+sed -i '2iexport JAVA_HOME='${JAVA_HOME//'/'/'\/'}'' /home/$user_tomcat/tomcat-server/bin/startup.sh
 
 # We must to limit the java memory!
 # http://stackoverflow.com/questions/2724820/tomcat-how-to-limit-the-maximum-memory-tomcat-will-use
 
-sed -i '2iexport JAVA_OPTS="-Xmx'$user_mem'm"' $HOME/tomcat-server/bin/startup.sh
+sed -i '2iexport JAVA_OPTS="-Xmx'$user_mem'm"' /home/$user_tomcat/tomcat-server/bin/startup.sh
 
 ############################################
 #   Saving all changes on the users file   #
