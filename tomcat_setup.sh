@@ -224,7 +224,7 @@ sed -i '2iexport JAVA_HOME='${JAVA_HOME//'/'/'\/'}'' $HOME/tomcat-server/bin/sta
 # We must to limit the java memory!
 # http://stackoverflow.com/questions/2724820/tomcat-how-to-limit-the-maximum-memory-tomcat-will-use
 
-sed -i '2iJAVA_OPTS="-Xmx'$user_mem'm"' $HOME/tomcat-server/bin/startup.sh
+sed -i '2iexport JAVA_OPTS="-Xmx'$user_mem'm"' $HOME/tomcat-server/bin/startup.sh
 
 ############################################
 #   Saving all changes on the users file   #
