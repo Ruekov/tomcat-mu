@@ -141,7 +141,7 @@ make
 cp jsvc ..
 
 ############################################
-# making Workers.Propierties config files  #
+#  making Workers.Properties config files  #
 ############################################
 
 # securty copy
@@ -150,20 +150,22 @@ cp /usr/local/jakarta/tomcat/conf/workers.properties  /usr/local/jakarta/tomcat/
 
 # If config file exists, load the last line to get the last port used.
 
-if [ -f "/usr/local/jakarta/conf/USERS.txt" ]; then
-	last_port=$(cat /usr/local/jakarta/conf/USERS.txt | tail -n 1 | awk '{print $3}')
+if [ -f "/usr/local/jakarta/conf/tomcatusers.cfg" ]; then
+	last_port=$(cat /usr/local/jakarta/conf/tomcatusers.cfg | tail -n 1 | awk '{print $3}')
 	let user_port=$last_port+10
 	# adding new worker to workers list
 	sed -i '/worker.list=/ s/$/,'$user_tomcat'/' /usr/local/jakarta/tomcat/conf/workers.properties 
 	else
     $user_port=9000
     # for a fresh installations, we must keep original file
-    cp /usr/local/jakarta/tomcat/conf/workers.propierties /usr/local/jakarta/tomcat/conf/workers.properties.original
-    # if is it the first time, worker.propierties it's still with "default workers". Commenting it..
-    sed -i '/worker.ajp13/ s/^/#/' /usr/local/jakarta/tomcat/conf/workers.propierties
-    sed -i '/worker.ajp12/ s/^/#/' /usr/local/jakarta/tomcat/conf/workers.propierties
+    cp /usr/local/jakarta/tomcat/conf/workers.properties /usr/local/jakarta/tomcat/conf/workers.properties.original
+    cp workers.properties /usr/local/jakarta/tomcat/conf/workers.properties
+    # Now using template of workers.properties
+    ## if is it the first time, worker.propierties it's still with "default workers". Commenting it..
+    ## sed -i '/worker.ajp13/ s/^/#/' /usr/local/jakarta/tomcat/conf/workers.propierties
+    ## sed -i '/worker.ajp12/ s/^/#/' /usr/local/jakarta/tomcat/conf/workers.propierties
     #removing also from balances and workers and adding the new one
-	sed -i 's/worker.list=/worker.list='$user_tomcat',/' /usr/local/jakarta/tomcat/conf/workers.propierties
+	sed -i 's/worker.list=/worker.list='$user_tomcat'/' /usr/local/jakarta/tomcat/conf/workers.properties
 fi
 
 # adding the new worker
@@ -173,7 +175,7 @@ fi
 echo "# ------- TOMCAT WORKER FOR USER $user_tomcat ----------
 worker.$user_tomcat.port = $user_port
 worker.$user_tomcat.host = localhost
-worker.$user_tomcat.type = ajp13" >> /usr/local/jakarta/tomcat/conf/workers.propierties
+worker.$user_tomcat.type = ajp13" >> /usr/local/jakarta/tomcat/conf/workers.properties
 
 # awk '/"tomcat worker"/{getline;print $0}' server.properties
 
