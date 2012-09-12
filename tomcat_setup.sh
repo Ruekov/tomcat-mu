@@ -94,7 +94,7 @@ case user_jdk in
 	export JAVA_HOME=/usr/local/java/
 	;;
 "3") 
-	echo "Installing tomcat 6.0.35"
+	echo "Installing JDK5"
 	versionjdk="jdk5"
 	# Link to get JDK
 	wget --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2Ftechnetwork%2Fjava%2Fjavasebusiness%2Fdownloads%2Fjava-archive-downloads-javase5-419410.html;" http://download.oracle.com/otn-pub/java/jdk/1.5.0_14/jdk-1_5_0_14-linux-i586.bin
@@ -158,12 +158,12 @@ if [ -f "/usr/local/jakarta/conf/tomcatusers.cfg" ]; then
 	# adding new worker to workers list
 	sed -i '/worker.list=/ s/$/,'$user_tomcat'/' /usr/local/jakarta/tomcat/conf/workers.properties 
 	else
-    $user_port=9000
-    # for a fresh installations, we must keep original file
-    cp /usr/local/jakarta/tomcat/conf/workers.properties /usr/local/jakarta/tomcat/conf/workers.properties.original
-    cp workers.properties /usr/local/jakarta/tomcat/conf/workers.properties
-    # Now using template of workers.properties
-    # Adding the new one
+	$user_port=9000
+	# for a fresh installations, we must keep original file
+	cp /usr/local/jakarta/tomcat/conf/workers.properties /usr/local/jakarta/tomcat/conf/workers.properties.original
+	cp workers.properties /usr/local/jakarta/tomcat/conf/workers.properties
+	# Now using template of workers.properties
+	# Adding the new one
 	sed -i 's/worker.list=/worker.list='$user_tomcat'/' /usr/local/jakarta/tomcat/conf/workers.properties
 fi
 
@@ -225,6 +225,10 @@ sed -i '2iexport JAVA_HOME='${JAVA_HOME//'/'/'\/'}'' /home/$user_tomcat/tomcat-s
 # http://stackoverflow.com/questions/2724820/tomcat-how-to-limit-the-maximum-memory-tomcat-will-use
 
 sed -i '2iexport JAVA_OPTS="-Xmx'$user_mem'm"' /home/$user_tomcat/tomcat-server/bin/startup.sh
+
+# change rights of modification
+
+chmod 755 /home/$user_tomcat/tomcat-server/bin/startup.sh
 
 ############################################
 #   Saving all changes on the users file   #
