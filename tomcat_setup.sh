@@ -1,16 +1,5 @@
 #!/bin/sh
 
-# CPANEL TEST
-
-# Config file on /usr/local/jakarta/conf/tomcatusers.cfg
-
-# VARS
-# $user_domain
-# $user_tomcat
-# $user_port
-# $user_jdk
-# $user_mem
-
 ############################################
 #     Checking the required variables      #
 ############################################

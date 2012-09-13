@@ -1,8 +1,5 @@
 #!/bin/sh
 
-
-# CPANEL TEST
-
 remove_tomcat() {
 	echo "Removing $1"
 	# Shuting down apache tomcat server
