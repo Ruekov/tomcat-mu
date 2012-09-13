@@ -20,6 +20,8 @@ remove_tomcat() {
 	sed -i 's/'$user_tomcat',//' /usr/local/jakarta/tomcat/conf/workers.propierties
 		# maybe it's the last one
 	sed -i 's/,'$user_tomcat'//' /usr/local/jakarta/tomcat/conf/workers.propierties
+	# Removing from cfg file
+	sed -i 's/'$user_tomcat'//' /usr/local/jakarta/conf/tomcatusers.cfg
 }
 
 echo "Chose action:"

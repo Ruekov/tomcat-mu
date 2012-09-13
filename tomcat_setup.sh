@@ -250,4 +250,4 @@ chmod 755 /home/$user_tomcat/tomcat-server/bin/startup.sh
 #   Saving all changes on the users file   #
 ############################################
 
-echo "$tomcat_user $user_domain $user_port $user_version $user_mem" >> /usr/local/jakarta/conf/tomcatusers.cfg
+echo "$user_tomcat $user_domain $user_port $user_version $user_mem" >> /usr/local/jakarta/conf/tomcatusers.cfg
