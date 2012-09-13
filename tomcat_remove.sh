@@ -4,11 +4,11 @@
 remove_tomcat() {
 	echo "Removing $1"
 	# Shuting down apache tomcat server
-	$HOME/tomcat-server/bin/shutdown.sh
+	/home/$user_tomcat/tomcat-server/bin/shutdown.sh
 	# We must kill java instances related to user
 	# TODO LIST
 	# Removing apache-tomcat server
-	rm -Rf $HOME/tomcat-server/
+	rm -Rf /home/$user_tomcat/tomcat-server/
 	# Removing changes on jkmod
 	cp /usr/local/apache/conf/userdata/std/2/$1/$2/cp_jkmount.conf.old  /usr/local/apache/conf/userdata/std/2/$1/$2/cp_jkmount.conf
 	cp /usr/local/apache/conf/userdata/std/1/$1/$2/cp_jkmount.conf.old  /usr/local/apache/conf/userdata/std/1/$1/$2/cp_jkmount.conf
