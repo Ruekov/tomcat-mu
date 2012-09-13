@@ -20,8 +20,7 @@ remove_tomcat() {
 	# Shuting down apache tomcat server
 	/home/$user_tomcat/tomcat-server/bin/shutdown.sh
 	# We must kill java instances related to user
-	tomcat_pid=$(cat /home/$user_tomcat/tomcat-server/temp/catalina.pid)
-	kill -9 $tomcat_pid
+	kill -9 $(cat /home/$user_tomcat/tomcat-server/temp/catalina.pid)
 	# Removing apache-tomcat server
 	rm -Rf /home/$user_tomcat/tomcat-server/
 	# Removing changes on jkmod
