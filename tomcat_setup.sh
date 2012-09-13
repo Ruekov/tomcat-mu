@@ -64,7 +64,7 @@ case user_version in
 esac
 
 ############################################
-#		Choice of the java jdk version	   #
+#     Choice of the java jdk version       #
 ############################################
 
 # In this case, we need also to unpack or install jdk in a different ways
@@ -162,7 +162,6 @@ cp jsvc ..
 #  making Workers.Properties config files  #
 ############################################
 
-
 # If config file exists, load the last line to get the last port used.
 
 if [ -f "/usr/local/jakarta/conf/tomcatusers.cfg" ]; then
@@ -197,15 +196,15 @@ cp /home/$user_tomcat/tomcat-server/conf/server.xml /home/$user_tomcat/tomcat-se
 
 # removing HTTP service
 
-sed -i '/protocol="HTTP\/1.1"/d' /home/$user_tomcat/tomcat-server/conf/server.xml.old
+sed -i '/protocol="HTTP\/1.1"/d' /home/$user_tomcat/tomcat-server/conf/server.xml
 
 # adapting AJP service
 
-sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Connector port="'$numport'" protocol="AJP\/1.3"\/>/g' /home/$user_tomcat/tomcat-server/conf/server.xml.old
+sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Connector port="'$numport'" protocol="AJP\/1.3"\/>/g' /home/$user_tomcat/tomcat-server/conf/server.xml
 
 # adding new host service
 
-sed -i 's/<\/Engine>/     <Host name="'$user_domain'" appBase="\/home\/'$user_tomcat'\/public_html">\n \t  \t <Alias>'$user_domain'<\/Alias>\n  \t  \t <Context path="" reloadable="true" docBase="\/home\/'$user_tomcat'\/public_html" debug="1" unpackWARs="true" autoDeploy="true"\/>\n  \t <\/Host>\n    <\/Engine>/g' /home/$user_tomcat/tomcat-server/conf/server.xml.old
+sed -i 's/<\/Engine>/     <Host name="'$user_domain'" appBase="\/home\/'$user_tomcat'\/public_html">\n \t  \t <Alias>'$user_domain'<\/Alias>\n  \t  \t <Context path="" reloadable="true" docBase="\/home\/'$user_tomcat'\/public_html" debug="1" unpackWARs="true" autoDeploy="true"\/>\n  \t <\/Host>\n    <\/Engine>/g' /home/$user_tomcat/tomcat-server/conf/server.xml
 
 ############################################
 # editing EasyApache's jkmod config files  #
