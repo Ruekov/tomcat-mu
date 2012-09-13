@@ -71,6 +71,10 @@ esac
 
 case user_jdk in
 "1") 
+	if [-d "/usr/local/java/jdk-1.7.0"]; then
+			echo "Already Installed"
+			export JAVA_HOME=/usr/local/java/jdk-1.7.0
+	fi
 	echo "Installing JDK 7"
 	versionjdk="jdk7"
 	# Link to get JDK
@@ -80,9 +84,13 @@ case user_jdk in
 	rm jdk-7-linux-x64.tar.gz
 	cp -Rf jdk-1.7.0 /usr/local/java/
 	rm -Rf jdk-1.7.0
-	export JAVA_HOME=/usr/local/java/
+	export JAVA_HOME=/usr/local/java/jdk-1.7.0
 	;;
 "2") 
+	if [-d "/usr/local/java/jdk1.6.0_33"]; then
+			echo "Already Installed"
+			export JAVA_HOME=/usr/local/java/jdk1.6.0_33
+	fi
 	echo "Installing JDK 6"
 	versionjdk="jdk6"
 	# Link to get JDK
@@ -93,9 +101,13 @@ case user_jdk in
 	rm jdk-6u33-linux-x64.bin 
 	cp -Rf cp jdk1.6.0_33 /usr/local/java/
 	rm -Rf jdk1.6.0_33
-	export JAVA_HOME=/usr/local/java/
+	export JAVA_HOME=/usr/local/java/jdk1.6.0_33
 	;;
 "3") 
+	if [-d "/usr/local/java/jdk1.6.0_33"]; then
+			echo "Already Installed"
+			export JAVA_HOME=/usr/local/java/jdk1.5.0_14
+	fi	
 	echo "Installing JDK5"
 	versionjdk="jdk5"
 	# Link to get JDK
@@ -104,7 +116,9 @@ case user_jdk in
 	chmod 755 jdk-1_5_0_14-linux-i586.bin 
 	./jdk-1_5_0_14-linux-i586.bin
 	rm jdk-1_5_0_14-linux-i586.bin
-	export JAVA_HOME=/usr/local/java/
+	cp -Rf cp jdk1.5.0_14 /usr/local/java/
+	rm -Rf jdk1.5.0_14
+	export JAVA_HOME=/usr/local/java/jdk1.5.0_14
 	;;
 "4")
 	echo "Write the path to JDK"

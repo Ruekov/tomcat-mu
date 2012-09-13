@@ -6,7 +6,7 @@ remove_tomcat() {
 	# Shuting down apache tomcat server
 	/home/$user_tomcat/tomcat-server/bin/shutdown.sh
 	# We must kill java instances related to user
-	# TODO LIST
+	# TODO LIST 
 	# Removing apache-tomcat server
 	rm -Rf /home/$user_tomcat/tomcat-server/
 	# Removing changes on jkmod
@@ -28,17 +28,23 @@ echo "2.- Change an User"
 read selection
 
 case selection in
-"1") echo "write user name:"
+"1") 
+	echo "write user name:"
 	read user_tomcat
 	 echo "write user domain:"
 	read user_domain
 	remove_tomcat $user_tomcat $user_domain
 	;;
-"2") echo "write user name:"
+"2") 
+	echo "write user name:"
 	read user_tomcat
 	echo "write user domain:"
 	read user_domain
 	remove_tomcat $user_tomcat $user_domain
 	./tomcat_setup_interactive.sh
+	;;
+*)
+	echo "not valid option"
+	exit 0
 	;;
 esac
