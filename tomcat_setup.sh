@@ -4,13 +4,6 @@
 #     Checking the required variables      #
 ############################################
 
-# simply parser
-
-if [ $# != 5 ]; then
-	echo "you must give 5 arguments: user, user_domain, tomcat version and jdk version"
-	exit 0
-fi
-
 user_tomcat=$1
 user_domain=$2
 user_version=$3
@@ -147,7 +140,6 @@ cp /home/$user_tomcat/tomcat-server/tomcat/bin/startup.sh /home/$user_tomcat/tom
 sed -i '2iexport JAVA_HOME='${JAVA_HOME//'/'/'\/'}'' /home/$user_tomcat/tomcat-server/bin/startup.sh
 
 # We must to limit the java memory!
-# http://stackoverflow.com/questions/2724820/tomcat-how-to-limit-the-maximum-memory-tomcat-will-use
 
 sed -i '2iexport JAVA_OPTS="-Xmx'$user_mem'm"' /home/$user_tomcat/tomcat-server/bin/startup.sh
 
@@ -160,7 +152,6 @@ chmod 755 /home/$user_tomcat/tomcat-server/bin/startup.sh
 ############################################
 
 echo "$tomcat_user $user_domain $user_port $user_version $user_mem" >> /usr/local/jakarta/conf/tomcatusers.cfg
-
 
 ############################################
 #        Rebooting Cpanel Tomcat           #
