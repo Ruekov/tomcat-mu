@@ -92,7 +92,7 @@ case user_version in
 esac
 
 ############################################
-#		Choice of the java jdk version	   #
+#     Choice of the java jdk version       #
 ############################################
 
 # In this case, we need also to unpack or install jdk in a different ways
