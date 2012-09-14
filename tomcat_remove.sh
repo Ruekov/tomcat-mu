@@ -23,7 +23,7 @@ remove_tomcat() {
 
 echo "Chose action:"
 echo "1.- Remove an User"
-echo "2.- Change an User"
+#echo "2.- Change an User"
 read selection
 
 case selection in
@@ -34,14 +34,14 @@ case selection in
 	read user_domain
 	remove_tomcat $user_tomcat $user_domain
 	;;
-"2") 
-	echo "write user name:"
-	read user_tomcat
-	echo "write user domain:"
-	read user_domain
-	remove_tomcat $user_tomcat $user_domain
-	./tomcat_setup_interactive.sh
-	;;
+#"2") 
+#	echo "write user name:"
+#	read user_tomcat
+#	echo "write user domain:"
+#	read user_domain
+#	remove_tomcat $user_tomcat $user_domain
+#	./tomcat_setup_interactive.sh
+#	;;
 *)
 	echo "not valid option"
 	exit 0
