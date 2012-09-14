@@ -1,12 +1,5 @@
 #!/bin/sh
 
-<<<<<<< .merge_file_t2rsFd
-=======
-
-# CPANEL TEST
-# CPANEL TEST2
-
->>>>>>> .merge_file_kiO7y7
 remove_tomcat() {
 	echo "Removing $1"
 	# Shuting down apache tomcat server
