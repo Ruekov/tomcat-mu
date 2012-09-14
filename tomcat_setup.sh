@@ -239,3 +239,13 @@ chmod 755 /home/$user_tomcat/tomcat-server/bin/startup.sh
 ############################################
 
 echo "$tomcat_user $user_domain $user_port $user_version $user_mem" >> /usr/local/jakarta/conf/tomcatusers.cfg
+
+
+############################################
+#        Rebooting Cpanel Tomcat           #
+############################################
+
+# Stop Apache Tomcat
+/usr/sbin/stoptomcat
+# Restart Apache Server
+/usr/local/cpanel/scripts/restartsrv_apache
