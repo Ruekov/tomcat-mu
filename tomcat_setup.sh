@@ -4,13 +4,6 @@
 #     Checking the required variables      #
 ############################################
 
-# simply parser
-
-if [ $# != 5 ]; then
-	echo "you must give 5 arguments: user, user_domain, tomcat version and jdk version"
-	exit 0
-fi
-
 user_tomcat=$1
 user_domain=$2
 user_version=$3
