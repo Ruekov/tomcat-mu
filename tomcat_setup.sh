@@ -13,18 +13,18 @@
 #     Checking the required variables      #
 ############################################
 
-# simply parser
+# Simple argparse
 
 if [ $# != 5 ]; then
-	echo "you must give 5 arguments: user, user_domain, tomcat version and jdk version"
+	echo "you must give 5 arguments: user, user_domain, tomcat version, jdk version and memory for the jvm"
 	exit 0
 fi
 
-user_tomcat=$1
-user_domain=$2
-user_version=$3
-user_jdk=$4
-user_mem=$5
+user_tomcat=$1 #without spaces and simbols
+user_domain=$2 #domain with or not www (directory)
+user_version=$3 #tomcat version to install
+user_jdk=$4 #jdk version to install (if are installed, didn't install again)
+user_mem=$5 #memory for jdk vm
 
 
 ############################################

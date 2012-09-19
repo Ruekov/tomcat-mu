@@ -4,7 +4,7 @@
 #           Adding new service             #
 ############################################
 
-# Simply argparse
+# Simple argparse
 
 if [ $# != 3 ]; then
 	echo "you must give 3 arguments: user, user_domain, route to tomcat app from USER path"
