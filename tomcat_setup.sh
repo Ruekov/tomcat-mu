@@ -42,7 +42,7 @@ case user_version in
 	echo "Installing tomcat 7.0.30"
 	versionbar="7.0.30"
 	if [ -x /usr/bin/lynx ] || [ -x /usr/sbin/lynx ];then
-		echo "Lynx is installed, now asking for the best download place"
+		echo  "Lynx is installed, now doing request to know the best download place"
 		wget $(lynx --dump http://tomcat.apache.org/download-70.cgi | grep -o "http:.*" | sed -e '\/apache-tomcat-7.0.30.tar.gz$/!d')
 		else
 		# Fastest download link for Ukraine to get tomcat
@@ -59,7 +59,7 @@ case user_version in
 	echo "Installing tomcat 6.0.35"
 	versionbar="6.0.35"
 	if [ -x /usr/bin/lynx ] || [ -x /usr/sbin/lynx ];then
-		echo "Lynx is installed, now asking for the best download place"
+		echo "Lynx is installed, now doing request to know the best download place"
 		wget $(lynx --dump http://tomcat.apache.org/download-60.cgi | grep -o "http:.*" | sed -e '\/apache-tomcat-6.0.35.tar.gz$/!d')
 		else
 		# Fastest download link for Ukraine to get tomcat
@@ -217,15 +217,20 @@ cp /home/$user_tomcat/tomcat-server/conf/server.xml /home/$user_tomcat/tomcat-se
 
 # removing HTTP service
 
-sed -i '/protocol="HTTP\/1.1"/d' /home/$user_tomcat/tomcat-server/conf/server.xml.old
+sed -i '/protocol="HTTP\/1.1"/d' /home/$user_tomcat/tomcat-server/conf/server.xml
 
 # adapting AJP service
 
-sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Connector port="'$numport'" protocol="AJP\/1.3"\/>/g' /home/$user_tomcat/tomcat-server/conf/server.xml.old
+sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Connector port="'$numport'" protocol="AJP\/1.3"\/>/g' /home/$user_tomcat/tomcat-server/conf/server.xml
 
 # adding new host service
 
-sed -i 's/<\/Engine>/     <Host name="'$user_domain'" appBase="\/home\/'$user_tomcat'\/public_html">\n \t  \t <Alias>'$user_domain'<\/Alias>\n  \t  \t <Context path="" reloadable="true" docBase="\/home\/'$user_tomcat'\/public_html" debug="1" unpackWARs="true" autoDeploy="true"\/>\n  \t <\/Host>\n    <\/Engine>/g' /home/$user_tomcat/tomcat-server/conf/server.xml.old
+sed -i 's/<\/Engine>/     <Host name="'$user_domain'" appBase="\/home\/'$user_tomcat'\/public_html">\n \t  \t <Alias>'$user_domain'<\/Alias>\n  \t  \t <Context path="" reloadable="true" docBase="\/home\/'$user_tomcat'\/public_html" debug="1" unpackWARs="true" autoDeploy="true"\/>\n  \t <\/Host>\n    <\/Engine>/g' /home/$user_tomcat/tomcat-server/conf/server.xml
+
+# changing shutdown port
+
+let numport2=$numport+10000
+sed -i 's/<Server port="8005" shutdown="SHUTDOWN">/ <Server port="$numport2" shutdown="SHUTDOWN">/g' /home/$user_tomcat/tomcat-server/conf/server.xml
 
 ############################################
 # editing EasyApache's jkmod config files  #
