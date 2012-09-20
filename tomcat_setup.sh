@@ -96,7 +96,6 @@ case user_jdk in
 			export JAVA_HOME=/usr/local/java/jdk-1.7.0
 	fi
 	echo "Installing JDK 7"
-	versionjdk="jdk7"
 	# Link to get JDK
 	wget --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com" "http://download.oracle.com/otn-pub/java/jdk/7/jdk-7-linux-x64.tar.gz"
 	# Unpack JDK
@@ -112,7 +111,6 @@ case user_jdk in
 			export JAVA_HOME=/usr/local/java/jdk1.6.0_33
 	fi
 	echo "Installing JDK 6"
-	versionjdk="jdk6"
 	# Link to get JDK
 	wget --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2Ftechnetwork%2Fjava%2Fjavase%2Fdownloads%2Fjdk6-downloads-1637591.html;" http://download.oracle.com/otn-pub/java/jdk/6u33-b03/jdk-6u33-linux-x64.bin
 	# Unpack JDK
@@ -129,7 +127,6 @@ case user_jdk in
 			export JAVA_HOME=/usr/local/java/jdk1.5.0_14
 	fi	
 	echo "Installing JDK5"
-	versionjdk="jdk5"
 	# Link to get JDK
 	wget --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2Ftechnetwork%2Fjava%2Fjavasebusiness%2Fdownloads%2Fjava-archive-downloads-javase5-419410.html;" http://download.oracle.com/otn-pub/java/jdk/1.5.0_14/jdk-1_5_0_14-linux-i586.bin
 	# Unpack JDK
@@ -182,7 +179,6 @@ cp jsvc ..
 #  making Workers.Properties config files  #
 ############################################
 
-
 # If config file exists, load the last line to get the last port used.
 
 if [ -f "/usr/local/jakarta/conf/tomcatusers.cfg" ]; then
@@ -204,6 +200,7 @@ if [ -f "/usr/local/jakarta/conf/tomcatusers.cfg" ]; then
 fi
 
 # adding the new worker
+# Long line: take care of \n!!!1
 
 sed -i 's/# ----- USERS -----/# ----- USERS ----- \n# ------- TOMCAT WORKER FOR USER '$user_tomcat' ---------- \nworker.'$user_tomcat'.port = '$user_port' \nworker.'$user_tomcat'.host = localhost \nworker.'$user_tomcat'.type = ajp13 \n/' /usr/local/jakarta/tomcat/conf/workers.properties
 
@@ -227,7 +224,7 @@ sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Co
 
 sed -i 's/<\/Engine>/     <Host name="'$user_domain'" appBase="\/home\/'$user_tomcat'\/public_html">\n \t  \t <Alias>'$user_domain'<\/Alias>\n  \t  \t <Context path="" reloadable="true" docBase="\/home\/'$user_tomcat'\/public_html" debug="1" unpackWARs="true" autoDeploy="true"\/>\n  \t <\/Host>\n    <\/Engine>/g' /home/$user_tomcat/tomcat-server/conf/server.xml
 
-# changing shutdown port
+# changing shutdown port (Also it's nice idea to change SHUTDOWN for another word)
 
 let numport2=$numport+10000
 sed -i 's/<Server port="8005" shutdown="SHUTDOWN">/ <Server port="$numport2" shutdown="SHUTDOWN">/g' /home/$user_tomcat/tomcat-server/conf/server.xml
@@ -267,10 +264,6 @@ sed -i '2iexport JAVA_HOME='${JAVA_HOME//'/'/'\/'}'' /home/$user_tomcat/tomcat-s
 
 sed -i '2iexport JAVA_OPTS="-Xmx'$user_mem'm"' /home/$user_tomcat/tomcat-server/bin/startup.sh
 
-# change rights of modification
-
-chmod 755 /home/$user_tomcat/tomcat-server/bin/startup.sh
-
 ############################################
 #   Saving all changes on the users file   #
 ############################################
@@ -283,5 +276,18 @@ echo "$user_tomcat $user_domain $user_port $user_version $user_mem" >> /usr/loca
 
 # Stop Apache Tomcat
 /usr/sbin/stoptomcat
+
 # Restart Apache Server
 /usr/local/cpanel/scripts/restartsrv_apache
+
+############################################
+#  Changing Rights of the diferent files   #
+############################################
+
+# change rights of modification of server.xml 
+
+chmod 755 /home/$user_tomcat/tomcat-server/bin/shutdown.sh
+
+# change rights of modification of startup script
+
+chmod 755 /home/$user_tomcat/tomcat-server/bin/startup.sh
