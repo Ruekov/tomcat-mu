@@ -8,7 +8,7 @@ echo "Choose JDK version"
 echo "1. JDK 7 x64 \n"
 echo "2. JDK 6 x64 \n"
 echo "3. JDK 5 i586 \n"
-echo "4. Let me write \n"
+echo "4. Other (write path to installed jdk) \n"
 
 read jdk
 

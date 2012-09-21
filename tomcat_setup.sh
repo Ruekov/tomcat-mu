@@ -4,6 +4,7 @@
 
 # VARS
 # $user_domain
+# $user_version
 # $user_tomcat
 # $user_port
 # $user_jdk
@@ -40,7 +41,7 @@ user_mem=$5 #memory for jdk vm
 case user_version in
 "1") 
 	echo "Installing tomcat 7.0.30"
-	versionbar="7.0.30"
+	export versionbar="7.0.30"
 	if [ -x /usr/bin/lynx ] || [ -x /usr/sbin/lynx ];then
 		echo  "Lynx is installed, now doing request to know the best download place"
 		wget $(lynx --dump http://tomcat.apache.org/download-70.cgi | grep -o "http:.*" | sed -e '\/apache-tomcat-7.0.30.tar.gz$/!d')
@@ -48,16 +49,18 @@ case user_version in
 		# Fastest download link for Ukraine to get tomcat
 		wget http://apache-mirror.telesys.org.ua/tomcat/tomcat-7/v7.0.30/bin/apache-tomcat-7.0.30.tar.gz
 	fi
+	cp apache-tomcat-7.0.30.tar.gz /home/$2/
 	;;
 "2") 
 	echo "Installing tomcat 7.0.29"
-	versionbar="7.0.29"
+	export versionbar="7.0.29"
 	# Fastest download link for Ukraine to get tomcat
 	wget http://apache.vc.ukrtel.net/tomcat/tomcat-7/v7.0.29/bin/apache-tomcat-7.0.29.tar.gz
+	cp apache-tomcat-7.0.29.tar.gz /home/$2/
 	;;
 "3") 
 	echo "Installing tomcat 6.0.35"
-	versionbar="6.0.35"
+	export versionbar="6.0.35"
 	if [ -x /usr/bin/lynx ] || [ -x /usr/sbin/lynx ];then
 		echo "Lynx is installed, now doing request to know the best download place"
 		wget $(lynx --dump http://tomcat.apache.org/download-60.cgi | grep -o "http:.*" | sed -e '\/apache-tomcat-6.0.35.tar.gz$/!d')
@@ -65,10 +68,11 @@ case user_version in
 		# Fastest download link for Ukraine to get tomcat
 		wget http://apache.vc.ukrtel.net/tomcat/tomcat-6/v6.0.35/bin/apache-tomcat-6.0.35.tar.gz
 	fi
+	cp apache-tomcat-6.0.35.tar.gz /home/$2/
 	;;
 "4")
 	echo "Installing tomcat 5.5.35"
-	versionbar="5.5.35"
+	export versionbar="5.5.35"
 	if [ -x /usr/bin/lynx ] || [ -x /usr/sbin/lynx ];then
 		echo "Lynx is installed, now asking for the best download place"
 		wget $(lynx --dump http://tomcat.apache.org/download-55.cgi | grep -o "http:.*" | sed -e '\/apache-tomcat-5.5.35.tar.gz$/!d')
@@ -76,6 +80,7 @@ case user_version in
 		# Fastest download link for Ukraine to get tomcat	
 		wget http://apache.cp.if.ua/tomcat/tomcat-5/v5.5.35/bin/apache-tomcat-5.5.35.tar.gz
 	fi
+	cp apache-tomcat-5.5.35.tar.gz /home/$2/
 	;;
 *)	
 	echo "You must give choice between 1-4"
@@ -182,7 +187,7 @@ cp jsvc ..
 # If config file exists, load the last line to get the last port used.
 
 if [ -f "/usr/local/jakarta/conf/tomcatusers.cfg" ]; then
-	# securty copy
+	# security copy
 	cp /usr/local/jakarta/tomcat/conf/workers.properties  /usr/local/jakarta/tomcat/conf/workers.properties.old
 	# asking for the last port used 
 	last_port=$(cat /usr/local/jakarta/conf/tomcatusers.cfg | tail -n 1 | awk '{print $3}')
@@ -218,7 +223,7 @@ sed -i '/protocol="HTTP\/1.1"/d' /home/$user_tomcat/tomcat-server/conf/server.xm
 
 # adapting AJP service
 
-sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Connector port="'$numport'" protocol="AJP\/1.3"\/>/g' /home/$user_tomcat/tomcat-server/conf/server.xml
+sed -i 's/<Connector port="8009" protocol="AJP\/1.3" redirectPort="8443" \/>/<Connector port="'$user_port'" protocol="AJP\/1.3"\/>/g' /home/$user_tomcat/tomcat-server/conf/server.xml
 
 # adding new host service
 
@@ -226,8 +231,8 @@ sed -i 's/<\/Engine>/     <Host name="'$user_domain'" appBase="\/home\/'$user_to
 
 # changing shutdown port (Also it's nice idea to change SHUTDOWN for another word)
 
-let numport2=$numport+10000
-sed -i 's/<Server port="8005" shutdown="SHUTDOWN">/ <Server port="$numport2" shutdown="SHUTDOWN">/g' /home/$user_tomcat/tomcat-server/conf/server.xml
+let numport2=$user_port+10000
+sed -i 's/<Server port="8005" shutdown="SHUTDOWN">/ <Server port="'$numport2'" shutdown="SHUTDOWN">/g' /home/$user_tomcat/tomcat-server/conf/server.xml
 
 ############################################
 # editing EasyApache's jkmod config files  #
